@@ -1,0 +1,38 @@
+<ng-content select="h2"></ng-content>
+<hr />
+<h1>Diretivas atributos</h1>
+
+<!-- Nesse exemplo de ng class eu crio uma condição se a classe for verdadeira ele deixa o background red, se for false ele troca para azul,  uso isso em um setInterval a cada 2 segundos no ts -->
+
+<!--aqui se o nome do input abaixo for leonardo ele desabilita os p -->
+<div *ngIf="nome != 'leonardo'">
+  <p [ngClass]="{ active: valor, disable: !valor }">ngClass</p>
+  <hr />
+  <!-- Nesse exemplo criei uma validação diferente aumentando a altura e trocando a cor da borda quando a troca de true pra false dentro do height existir, utilizei o mesmo setInterval do ng class para poder fazer este exemplo -->
+  <p [ngStyle]="{ height: heightPx, border: border }">ngStyle</p>
+</div>
+
+<hr />
+<br />
+
+<!-- Nesse exemplo o que foi feito foi realizar um input usando o ng model que ira ter o atributo nome que começa com uma string vazia, tambem foi criado uma lista com ngfor para trazer os nomes digitados e criado o botao que traz uma função de quando salvar o nome ira aparecer  na lista -->
+<input type="text" [(ngModel)]="nome" />
+<button (click)="salvar()">Salvar</button>
+<li *ngFor="let item of list">{{ item.nome }}</li>
+
+<hr />
+
+<!-- ng-template -->
+<!-- o ng template é uma tag HTML que carrega antes da DOM e nao aparece caso voce nao habilite, ela serve para realizar validações antes da DOM carregar. nesse exemplo ela alterna entre false e true para aparecer ou não -->
+<ng-template [ngIf]="ngtemplateboolean">
+  <p>ng-template</p>
+</ng-template>
+
+<hr />
+
+<!-- pipe -->
+<!-- Nesse exemplo de pipe eu utilizo ele para colocar uma condição de uppercase -->
+<h3>{{ pipe | uppercase }}</h3>
+
+<!-- Nesse segundo exemplo eu utilizo o pipe| para colocar a data e hora em dia/mes/anos -->
+{{ date | date : "dd/MM/yyyy" }}

@@ -1,0 +1,13 @@
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'input-component',
+  templateUrl: './input.component.html',
+  styleUrls: ['./input.component.scss'],
+})
+export class InputComponent implements OnInit {
+  @Input() public contador: number = 0;
+  constructor() {}
+
+  ngOnInit(): void {}
+}

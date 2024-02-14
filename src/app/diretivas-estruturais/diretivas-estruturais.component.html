@@ -1,0 +1,47 @@
+<!-- ngif -->
+<!-- nesse exemplo quando a condição for false ele ira mostrar o que tem no ng template -->
+<p *ngIf="condition; else elseBlock">True</p>
+<ng-template #elseBlock>
+  <p>False</p>
+</ng-template>
+
+<hr />
+
+<p *ngIf="conditionClick">True</p>
+<p *ngIf="!conditionClick">False</p>
+<button (click)="onClick()">Clique para mudar o estado</button>
+
+<hr />
+<!-- ngfor -->
+<ul>
+  <li
+    *ngFor="let item of list; let i = index"
+    (click)="onClickEventList($event)"
+  >
+    [{{ i }}] - {{ item.nome }} - idade = {{ item.idade }}
+  </li>
+</ul>
+<button (click)="onClickAddList()">Clique para adicionar alguem</button> <br />
+<br />
+<button (click)="onClickRemoveList()">Clique para remover alguem</button>
+
+<hr />
+<!-- ngSwitch -->
+<!-- Nesse exemplo eu uso o ng switch com uma variavel nome que tem como padrao um valor vazio, passo duas conduções para o switchcase nos paragrafos e quando eu digito a condição no input ele me traz o conteudo do paragrafo digitado -->
+
+<input type="text" [(ngModel)]="nome" placeholder="digite o nome da condição" />
+<div [ngSwitch]="nome">
+  <p
+    *ngSwitchCase="'primeira'"
+    style="background-color: red; color: white; width: 300px"
+  >
+    Leonardo
+  </p>
+  <p
+    *ngSwitchCase="'segunda'"
+    style="background-color: blue; color: white; width: 300px"
+  >
+    Leo
+  </p>
+  <p *ngSwitchDefault>Default</p>
+</div>
