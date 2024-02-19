@@ -125,6 +125,127 @@ feito isso voce vai ate o app module e importa o seu module, importando ele voce
 
 - Para que haja a comunicação entre dois componentes nos precisamos utilizar a injeção de dependencia no componente e criar a função desejada dentro do nosso service.
 
+# Subscribe
+
+- Subscribe é uma forma e enviar dados atraves de inscrição, voce emite os dados atraves de um eventEmitter no seu server e pode receber os dados atraves de inscrição no seu componente dentro do ngOnInit., exemplo:
+
+  <!-- Server -->
+
+  public emitEvent = new EventEmitter();
+
+  public foodListAlert(value: string) {
+  return this.emitEvent.emit(value);
+  }
+
+  <!-- Component/ngOnInit -->
+
+      this.foodListService.emitEvent.subscribe(
+        (res) => alert(`Você adicionou o item ${res}`)
+
+  );
+
+# Fake Server e Requisição get
+
+- É possivel realizar a criação de um server fake para testes e outras coisas sem precisar necessariamente de criar um teste, para isso deve-se ter instalado no computador o json-server (npm install -g json-server) e depois depois na mesma hierarquia do projeto deve-se criar um arquivo db.json e apartir dai colocar os dados lá.
+
+- Após colocar os dados para iniciar o servidor devemos estar na pasta do arquivo json e digitar no terminal json-server --watch db.json onde ele irá startar o server para que seja usado e poder pegarmos os dados
+
+- Para que nos possamos realizar a requisição API na nossa API fake primeiro dentro do seu módulo onde contem os componentes que voce irá usar os dados da API deve-se importar o httpClientModule e colocar nos imports, apartir dai ja podemos usar.
+
+- Para usar os dados do server fake agora que ja temos o import no module, iremos no nosso service e criaremos primeiro uma variavel private como url (private url:string = 'http://localhost:3000'), depois criaremos uma injeção de dependencia no constructor trazendo o import do httpClient (private:http = httpClient) e apartir dai chamar p método para uso dos dados.
+  <!-- Exemplo: -->
+
+  public foodList(): Observable<Array<FoodList>> {
+  return this.http.get<Array<FoodList>>(`${this.url}list-food`).pipe(
+  (res) => res,
+  (error) => error
+  );
+  }
+
+- Vale lembrar que é necessario tipar a nossa requisição, para isso chamamos o Observable para ficar "escutando" a requisição e depois atraves dos <> devemos criar uma tipagem a parte com os dados que queremos trazer, também vale comentar que o pipe seria o "qual o proximo passo".
+
+- Na chamada da nossa requisição via component teremos que mudar tanto a variavel criada quanto o método de chamada, segue os exemplos
+
+<!-- Variavel -->
+
+public foodList: Array<FoodList> = []; aqui tiramos o array como string e trazemos nossa tipagem ou qualquer coisa.
+
+  <!-- ngOnInit -->
+
+      this.foodListService.foodList().subscribe(
+      (res) => (this.foodList = res),
+      (error) => error
+    );
+
+# Requisição Post
+
+- Exemplo de requisição com post:
+
+  public foodListAdd(value: string): Observable<FoodList> {
+  return this.http
+  .post<FoodList>(`${this.url}list-food`, { nome: value })
+  .pipe(
+  (res) => res,
+  (error) => error
+  );
+  }
+
+  - Vale lembrar que para que esta requisição funcione é necessario que o recebedor da informação tenha o subscribe() senão não irá funcionar
+
+  # Requisição Put
+
+  Exemplo de aplicação put via http
+
+  # Requisição Delete
+
+    <!-- Service -->
+
+  public foodListPut(value: string, id: number): Observable<FoodList> {
+  return this.http
+  .put<FoodList>(`${this.url}list-food/${id}`, { nome: value })
+  .pipe(
+  (res) => res,
+  (error) => error
+  );
+  }
+
+    <!-- Component -->
+
+      public foodListPut(value: string, id: number) {
+      this.foodListService.foodListPut(value, id).subscribe(
+        (res) => console.log(res),
+        (error) => error
+      );
+
+  }
+
+  - Vale lembrar que a função put está sendo passada como um evento keyup.enter no input do html
+  Exemplo de aplicação de delete via http
+
+    <!-- Service -->
+
+  public foodListDelete(id: number): Observable<FoodList> {
+  return this.http.delete<FoodList>(`${this.url}list-food/${id}`).pipe(
+  (res) => res,
+  (error) => error
+  );
+  }
+
+    <!-- Component -->
+
+  public foodListDelete(id: number) {
+  return this.foodListService.foodListDelete(id).subscribe(
+  (res) => {
+  this.foodList = this.foodList.filter((item) => {
+  return id !== item.id;
+  });
+  },
+  (error) => error
+  );
+  }
+
+  - Vale lembrar que a função put está sendo passada como um evento no botão de delete
+
 # Sobre rotas e mudança de página no angular
 
 - Para realizar a mudança de página no angular cria-se uma nova rota no arquivo app routes e o path devera ser o que voce deseja que seja colocado no / e no component devera ser o novo componente, exemplo de duas rotas:
@@ -140,8 +261,8 @@ component: PaginaComprasComponent
 }
 ]
 
--Quando quisermos adicionar a função de mudar de página para um botao por exemplo deve-se criar o evento no botao, no component ts deve-se no constructor importar o router e colocar o caminho no botao, exemplo:
-<button (click)='MudarPagina()'></button>
+- Quando quisermos adicionar a função de mudar de página para um botao por exemplo deve-se criar o evento no botao, no component ts deve-se no constructor importar o router e colocar o caminho no botao, exemplo:
+  <button (click)='MudarPagina()'></button>
 
 Constructor(private router:Router){}
 
