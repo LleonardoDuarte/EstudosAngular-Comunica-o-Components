@@ -100,10 +100,53 @@ Moldam ou remodelam a estrutura do DOM, adicionando, removendo e manipulando os 
 
 - Module é um mecanismo para agrupar components,diretivas,pipes e serviços relacionados,de forma a combinar com outros modulos para criar um app
 
-- Para conseguirmos realizar o uso dos componentes dentro de um novo moduo devemos seguir alguns passos, primeiro devemos dentro do modulo criado realizar o exports do seu componente, exemplo: exports: [NewComponentComponent], após isso devemos importar nosso module dentro do module principal da página, o app.module, para isso dentro do app module iremos em imports e colocaremos a importação do modulo lá
+- Para conseguirmos realizar o uso dos componentes dentro de um novo modulo devemos primeiro importar o componente no modulo que voce quer e colocar este componente no declarations e criar um exports e colocar la tambem, exemplo:
+
+declarations:[component],
+exports:[component],
+
+feito isso voce vai ate o app module e importa o seu module, importando ele voce vai nos imports e declara ele lá, apartir dai voce ja pode usar o seletor no app component.
 
 # Comunicação entre componentes
 
 - A comunicação entre componentes basicamente usa o @input e @output , como os nomes sugerem o input serve para a entrada de dados e o output para a saida, em uma cascata de cima para baixo as informaçoes dos componentes pais sao passadas aos componentes filhos atraves do input, quando um componente filho deseja voltar informaçoes acima usa-se o output
 
+# Service
 
+- Services são úteis para salvar regras de negócio, pegar informações advindas do servidor (API) (seja por get, post, put, etc...), atualizar e mandar informações a outros componentes.
+
+- Nas versões mais atuais do angular o service ja vem com o @injectable como 'root' entao ele ja funcionará em toda aplicação, sem necessidade de importar nada.
+
+- Para fazer a injeção de dependencia do nosso service em outro componente dentro do constructor no valor devemos colocar uma variavel publica ou privada dar um nome e chamar o nome do service, exemplo: Constructor(private foodListService: FoodListService){}, alem disso importar o service nos imports.
+
+- Para chamar o método que contem as informaçoes da lista no nosso service no meu componente, primeiro devo criar uma variavel tipada (public foodList: Array<string> = [];) depois no ngOnInit eu chamo essa variavel dizendo que ela é = ao service.nomedométodo ( this.foodList = this.foodListService.foodList();) apartir dai posso usar o método no HTML para pegar as informaçoes.
+
+# Comunicação entre componentes sem uso de input e output (usando services)
+
+- Para que haja a comunicação entre dois componentes nos precisamos utilizar a injeção de dependencia no componente e criar a função desejada dentro do nosso service.
+
+# Sobre rotas e mudança de página no angular
+
+- Para realizar a mudança de página no angular cria-se uma nova rota no arquivo app routes e o path devera ser o que voce deseja que seja colocado no / e no component devera ser o novo componente, exemplo de duas rotas:
+  export const route:Routes = [
+
+{
+path:'',
+component: HomeComponent
+}
+{
+path: 'chat',
+component: PaginaComprasComponent
+}
+]
+
+-Quando quisermos adicionar a função de mudar de página para um botao por exemplo deve-se criar o evento no botao, no component ts deve-se no constructor importar o router e colocar o caminho no botao, exemplo:
+<button (click)='MudarPagina()'></button>
+
+Constructor(private router:Router){}
+
+public MudarPagina(){
+this.router.navigate('PaginasComprasComponent')
+}
+
+Apartir dai quando se clicar no botao ele direcionara para a página desejada
