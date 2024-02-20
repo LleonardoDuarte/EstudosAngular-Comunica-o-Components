@@ -20,7 +20,9 @@ import { Component, OnInit } from '@angular/core';
     <hr />
     <h1>Services</h1>
     <food-list></food-list>
-    <food-add></food-add>
+    <food-add></food-add> <br />
+    <h1>Formulários (ngForm)</h1>
+    <forms-component></forms-component>
     <router-outlet></router-outlet>`,
 })
 export class AppComponent implements OnInit {

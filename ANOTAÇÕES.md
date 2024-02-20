@@ -246,6 +246,15 @@ public foodList: Array<FoodList> = []; aqui tiramos o array como string e trazem
 
   - Vale lembrar que a função put está sendo passada como um evento no botão de delete
 
+  # Formulários (ngForm)
+
+  - O ngForm é uma forma de construção de formulários usando proprio serviço do angular, para usar o ngForm devemos primeiramente importaro formsModule no seu module e usar o ngForm dentro da tag HTML form, ex:
+  <form #form ngForm>
+
+  # Reactive Forms
+
+  - Reactive forms é uma outra forma de se trabalhar com formulários no angular, 
+
 # Sobre rotas e mudança de página no angular
 
 - Para realizar a mudança de página no angular cria-se uma nova rota no arquivo app routes e o path devera ser o que voce deseja que seja colocado no / e no component devera ser o novo componente, exemplo de duas rotas:

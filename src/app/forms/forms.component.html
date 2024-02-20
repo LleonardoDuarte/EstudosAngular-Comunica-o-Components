@@ -1,0 +1,59 @@
+<form #form="ngForm">
+  <label
+    >Nome:
+    <!-- Nessa caso do uso do ngModule eu referencio ele apartir do name, sem precisar passar valor diretamente -->
+    <input type="text" ngModel name="nome" id="" />
+  </label>
+  <br />
+
+  <!-- Input Radio -->
+  <label
+    >Masculino:
+    <input type="radio" ngModel name="sexo" value="Masculino" />
+  </label>
+  <br />
+
+  <label
+    >Feminino:
+    <input type="radio" ngModel name="sexo" value="Feminino" />
+  </label>
+  <br />
+
+  <label
+    >Outros:
+    <input type="radio" ngModel name="Outros" value="Outros" />
+  </label>
+  <br />
+
+  <!-- Input CheckBox  || quando se clica na checkbox ele coloca como true ou falso referenciando o ngmodule e a interpolation-->
+  <label
+    >Angular:
+    <input type="checkbox" ngModel name="angular" />
+  </label>
+
+  <br />
+  <label
+    >Vue:
+    <input type="checkbox" ngModel name="vue" />
+  </label>
+  <br />
+
+  <label
+    >React:
+    <input type="checkbox" ngModel name="react" />
+  </label>
+  <br />
+
+  <!-- Selected -->
+
+  <select ngModel name="comidas">
+    <option value="">Selecione um lanche</option>
+    <!-- O uso do ngValue serve para trazer nao só o item mas traz o item dentro de outro objeto -->
+    <option *ngFor="let item of listComida" [ngValue]="item">
+      {{ item.comida }} - {{ item.preco }}
+    </option>
+  </select>
+</form>
+<br />
+
+{{ form.value | json }}
